@@ -1,6 +1,6 @@
-## 📔 도서관 대출 서비스
+# 📔 도서관 대출 서비스
 
-### 프로젝트 개요
+## 프로젝트 개요
 
 도서관에 있는 책을 온라인으로 관리할 수 있는 웹 서비스로 책의 상세 정보, 대여/반납 기능을 유저에게 제공한다.
 
@@ -10,7 +10,7 @@
 [데모페이지](http://kdt-1st-project-29.koreacentral.cloudapp.azure.com)  
 [발표자료](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/78ad8589-b1fd-4dc6-b87a-131fa68d70ae/0828_%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210830%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210830T093246Z&X-Amz-Expires=86400&X-Amz-Signature=b7b41f1f4d7a36adede62b9b3d3ed25ea45ebd10a0b78df65a4a69371092a25c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%220828%2520%25EB%25B0%259C%25ED%2591%259C%25EC%259E%2590%25EB%25A3%258C.pdf%22)
 
-### 디렉토리 구조
+## 디렉토리 구조
 
 ```bash
 ├── public : css 및 img파일
@@ -42,7 +42,7 @@
 └── app.js : 서버 실행 파일
 ```
 
-### API 명세
+## API 명세
 
 [Swagger page](https://app.swaggerhub.com/apis-docs/elice_heeji/elice_library/1.0.0)
 
@@ -52,7 +52,7 @@
 <summary>Naming Convention</summary>
 <div markdown="1">
 
-#### 기본
+### 기본
 
 - 단일 글자로 짓지 않는다. 이름을 보고 쓰임새를 알 수 있도록 한다.
 - 이름 맨 앞, 맨 뒤에 '\_'을 쓰지 않는다.
@@ -61,18 +61,18 @@
 - 이름에 복수형을 표기하지 않는다.
 - 줄임말을 사용하지 않는다.
 
-#### 파일 및 패키지
+### 파일 및 패키지
 
 - 파일의 이름은 소문자로 표기한다. `helloworld.js`
 - 패키지 이름은 lowerCamelCase로 표기한다.
 - 파일의 이름은 default export의 이름과 일치해야 한다.
 
-#### 변수
+### 변수
 
 - 변수의 이름은 lowerCamelCase로 표기한다.
 - 변수의 이름은 알파벳으로 시작해야한다.
 
-#### 함수
+### 함수
 
 - 함수의 이름은 lowerCamelCase로 표기한다.
 - 함수의 이름은 동사 또는 동사구문으로 표기한다.
@@ -80,12 +80,12 @@
 - 함수 라이브러리를 export할 때는 PascalCase로 표기한다.
 - 함수의 파라미터는 lowerCamelCase로 표기한다.
 
-#### 객체
+### 객체
 
 - 이름은 lowerCamelCase로 표기한다.
 - export할 때는 PascalCase로 표기한다.
 
-#### 클래스
+### 클래스
 
 - 클래스나 생성자의 이름은 PascalCase로 표기한다.
 - 이름은 명사 또는 명사구문으로 표기한다
@@ -94,14 +94,14 @@
 </details>
 
 
-### 실행방법
+## 실행방법
 
-#### 개발
+### 개발
 
 `npm install`  
 `npm start`
 
-#### 배포
+### 배포
 
 `npm start` (pm2 start app.js)  
 `npx pm2 list` - 돌고 있는 노드 프로세스 확인  
@@ -110,7 +110,7 @@
 `npx pm2 reload all` - 서버 재시작  
 `npx pm2 monit` - 모니터링  
 
-### 상세 기능
+## 상세 기능
 
 - **Authentication**
   - 아이디, 비밀번호, 이름을 입력받아 회원가입 시 유저 정보 저장
