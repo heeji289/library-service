@@ -1,0 +1,172 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+body {
+  background-color: #f2f5f7;
+}
+
+img {
+  width: 140px;
+  height: 170px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 300px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  max-width: 100%;
+  background-color: #fff;
+  box-shadow: 0 5px 10px 0 rgba(#000, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1rem;
+  justify-content: start;
+}
+
+#login-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  text-align: center;
+  height: 100vh;
+}
+
+.login-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.join-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 200px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  border-radius: 4px;
+  height: 37px;
+  padding: 10px;
+  border: 1px solid silver;
+  margin-bottom: 3px;
+}
+
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card {
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  background-color: #81a1c1 !important;
+  border-color: #81a1c1 !important;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  border-color: #88c0d0 !important;
+  background-color: #88c0d0 !important;
+  color: #e8f5e9 !important;
+}
+
+a {
+  color: #5e81ac !important;
+}
+
+.card__left {
+  margin-bottom: 3px;
+}
+
+.card__frame {
+  height: 160px;
+  width: 160px;
+  position: relative;
+}
+.card__img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.rating__box {
+  width: 30px;
+}
+
+#star-rating img {
+  width: 30px;
+  height: auto;
+  color: #a3be8c;
+}
+
+#star-rating,
+.star__btn {
+  text-align: right;
+}
+
+.fa-star {
+  color: #88c0d0;
+}
+
+.join__alert,
+.login__alert {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+#box {
+  position: relative;
+}
+#box form {
+  background: #88c0d0;
+  padding: 5px;
+  display: none;
+  position: absolute;
+  top: 27px;
+  z-index: 2;
+}
+#button {
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+input[type="submit"] {
+  background: none;
+  color: #fff;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}

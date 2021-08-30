@@ -1,0 +1,133 @@
+{% extends 'layout.html' %} {% block content %} {% if user and user.id %}
+<div style="margin: 20px">
+  <div class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      {% if pageOrder == 'id' %} 기본순 {% elif pageOrder == 'avg_rating' %}
+      평점높은순 {% elif pageOrder == 'publication_date' %} 최신발간순{% endif
+      %}
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="/?page=1&order=avg_rating">평점 높은순</a></li>
+      <li><a href="/?page=1&order=publication_date">최신 발간순</a></li>
+    </ul>
+  </div>
+</div>
+<!-- <p style="color: gray">{{pageOrder}}</p> -->
+<div class="row">
+  {% for book in books %}
+  <div class="col-sm-4">
+    <div class="card text-center rounded-0">
+      <div class="card__image">
+        {% if book.id in [1,2,3,7,8,9]%}
+        <img width="100px" src="book_img/{{book.id}}.png" alt="" />
+        {% else %}
+        <img width="100px" src="book_img/{{book.id}}.jpg" alt="" />
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <a id="book-name" href="/book/{{book.id}}"
+          ><h6 class="card-title"><b>{{book.book_name}}</b></h6></a
+        >
+        <div class="card__left">
+          <div class="card-text">
+            <div class="rating">
+              {% if book.avg_rating === 0 %}
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+
+              {% elif book.avg_rating === 1 %}
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+
+              {% elif book.avg_rating === 2 %}
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+
+              {% elif book.avg_rating === 3 %}
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+
+              {% elif book.avg_rating === 4 %}
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+
+              {% else %}
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+
+              {% endif %}
+            </div>
+          </div>
+          <p class="card-text" style="margin-bottom: 8px">
+            <b>{{book.stock}}권</b> 남음
+          </p>
+        </div>
+
+        <div class="card__right">
+          <button
+            class="btn btn-primary"
+            onclick="handleBorrowClick(`{{book.id}}`, `{{book.book_name}}`, `{{user.id}}`)"
+          >
+            대여하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<nav aria-label="Page navigation example" style="text-align: center">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="/?page=1&order={{pageOrder}}">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/?page=2&order={{pageOrder}}">2</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/?page=3&order={{pageOrder}}">3</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/?page=4&order={{pageOrder}}">4</a>
+    </li>
+  </ul>
+</nav>
+{% endif%} {% endblock %} {% block script %}
+<script>
+  // 대여하기 버튼
+  function handleBorrowClick(book_id, book_name, user_id) {
+    axios
+      .post(`/borrow/${book_id}`)
+      .then((response) => {
+        if (response.data.redirect == "/") {
+          window.alert(`💌 대여 완료: ${book_name} `);
+          window.location = "/";
+        } else if (response.data.message == "reject") {
+          window.alert("❌ 대여할 수 없습니다.");
+        } else if (response.data.message == "already") {
+          window.alert("💔 이미 대여중인 도서입니다");
+        }
+      })
+      .catch(console.log);
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,242 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% if user and user.id %}
+  <div class="card mb-3 rounded-0">
+    <div class="row g-0">
+      <div class="col-md-4">
+        {% if book.id in [1,2,3,7,8,9]%}
+        <div>
+          <img
+            class="img-fluid rounded-start card__img"
+            src="/book_img/{{book.id}}.png"
+            alt=""
+          />
+        </div>
+        {% else %}
+        <div>
+          <img
+            class="img-fluid rounded-start card__img"
+            src="/book_img/{{book.id}}.jpg"
+            alt=""
+          />
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h3 class="card-title"><b>{{book.book_name}}</b></h3>
+          <div style="color: gray;">
+            <span>{{book.author}} 지음 | </span> 
+            <span>{{book.publisher}} | </span>
+            <span class="book__date">{{book.publication_date }}</span>
+          </div>
+          <br />
+          <p>총 {{book.pages}} 페이지</p>
+          <p>ISBN: {{book.isbn}}</p>
+          <hr />
+          <p>{{book.description}}</p>
+          <p><a href="{{book.link}}" target="blank"><i class="fas fa-location-arrow"></i>  책 상세 정보</a></p>
+        </div>
+        <div class="card__right">
+          <button
+          style="margin-right: 3px; margin-bottom: 3px;"
+            class="btn btn-primary float-right"
+            onclick="handleBorrowClick(`{{book.id}}`, `{{book.book_name}}`, `{{user.id}}`)"
+          >
+            대여하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="rating">
+    <input id="comment-book-id" type="hidden" value="{{book.id}}" />
+    <input id="comment-user-id" type="hidden" value="{{user.id}}" />
+    <textarea id="form-control" class="form-control" rows="3" required></textarea>
+    <div style="float: right; margin-top: 3px;">
+      <span id="star-rating"></span>
+      <button class="btn btn-primary star__btn form__btn " type="submit">작성하기</button>
+    </div>
+  </form>
+  <p id="log"></p>
+
+  <h4>서평 ({{numOfRatings}})</h4>
+  {% for comment in ratings %}
+  <div class="card">
+    <div class="card-header">
+      <b>{{comment.user_name}}</b>
+      {% if comment.rating === 0 %}
+      <span style="float: right;">
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      </span>
+
+      {% elif comment.rating === 1 %}
+      <span style="float: right;">
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      </span>
+
+      {% elif comment.rating === 2 %}
+      <span style="float: right;">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      </span>
+
+      {% elif comment.rating === 3 %}
+      <span style="float: right;">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      </span>
+
+      {% elif comment.rating === 4 %}
+      <span style="float: right;">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      </span>
+
+      {% else %}
+      <span style="float: right;">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      </span>
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{comment.comment}}</p>
+      {% if comment.UserId === user.id %}
+      <span style="float: right;">
+      <div id="box">
+        <span id="button">수정하기</span>
+        <button class="btn btn-primary" onclick="handleDeleteReview(`{{book.id}}`, `{{user.id}}`)">삭제하기</button>
+        
+        <form action="/rating/{{book.id}}" id="form" method="POST">
+          <input type="hidden" name="_method" value="put">
+          <p><input name="changeComment" type="text" placeholder="수정할 내용을 적어주세요"/></p>
+          <p><input type="submit" value="제출하기" /></p>
+        </form>
+      </div>
+      </span>
+      {% endif %}
+    </div>
+    
+  </div>
+  {% endfor %} {% block comments %} {% endblock %}
+</div>
+{% endif%}
+{% endblock %}
+
+{% block script %}
+<script>
+
+  // 수정하기 누를시 폼 출력
+  $("#button").click(function() {  
+    $("#box form").toggle("slow");
+    return false;
+  });
+
+  // 책 날짜 변환
+  var date = new Date();
+  const bookDate = document.querySelector('.book__date')
+  const temp = bookDate.innerText
+
+  bookDate.innerText = moment(bookDate.innerText).format('YYYY년 MM월 DD일 출간')
+
+  const starRatingEl = document.getElementById("star-rating");
+  const rating_form = document.getElementById("rating");
+  const starRating = new Starry(starRatingEl);
+
+  starRating.update({
+    
+  })
+
+  const log = document.getElementById("log");
+
+  // 리뷰 생성
+  function logSubmit(event) {
+    event.preventDefault();
+
+    const cur_star = starRating.getCurrentRating();
+    const cur_bookId = event.target[0].value;
+    const cur_userId = event.target[1].value;
+    const cur_comment = event.target[2].value;
+
+    console.log(cur_star, cur_bookId, cur_comment);
+
+    axios
+      .post(`/rating/${cur_bookId}`, {
+        cur_star,
+        cur_bookId,
+        cur_userId,
+        cur_comment,
+      })
+      .then((res) => {
+        if (res.data.error == "already") {
+          window.alert("💔 이미 리뷰를 작성하셨습니다.");
+        } else if (res.data.error == "not_returned") {
+          window.alert("대여기록이 없습니다");
+        } else {
+          window.alert("평가 완료");
+          window.location = res.data.redirect;
+        }
+      });
+  }
+
+  rating_form.addEventListener("submit", logSubmit);
+
+  // 리뷰 삭제
+  function handleDeleteReview(book_id, user_id){
+    axios.delete(`/rating/${book_id}`)
+  .then(function (response) {
+    window.alert('리뷰가 삭제되었습니다.')
+    window.location = response.data.redirect;
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+  }
+
+  // 대여하기 버튼
+  function handleBorrowClick(book_id, book_name, user_id) {
+    axios
+      .post(`/borrow/${book_id}`)
+      .then((response) => {
+        if (response.data.redirect == "/") {
+          window.alert(`💌 대여 완료: ${book_name} `);
+          window.location = `/book/${book_id}`;
+        } else if (response.data.message == "reject") {
+          window.alert("❌ 대여할 수 없습니다.");
+        } else if (response.data.message == "already") {
+          window.alert("💔 이미 대여중인 도서입니다");
+        }
+      })
+      .catch(console.log);
+  }
+
+  
+</script>
+{% endblock %}

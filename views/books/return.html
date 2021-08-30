@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h3 style="text-align: center;">반납할 도서</h3>
+<div class="row">
+  {% if user and user.id %} {%for record in records%}
+  <div class="col-sm-4">
+    <div class="card text-center rounded-0">
+      <div class="card__image">
+        {% if record.BookId in [1,2,3,7,8,9]%}
+        <img src="/book_img/{{record.BookId}}.png" alt="" />
+        {% else %}
+        <img src="/book_img/{{record.BookId}}.jpg" alt="" />
+        {% endif %}
+        <div class="card-body">
+          <a id="book-name" href="/book/{{record.BookId}}"
+            ><h6 class="card-title"><b>{{record.book_name}}</b></h6></a
+          >
+        <div class="card__left">
+          <div class="card-text">
+          </div>
+            대여일:
+            {{record.borrow_date.getFullYear()}}년
+            {{record.borrow_date.getMonth() + 1}}월
+            {{record.borrow_date.getDate()}}일 <br />
+          <button
+            class="btn btn-primary"
+            onclick="handleReturnClick(`{{record.BookId}}`,`{{user.id}}`)"
+            style="margin-top: 10px;"
+          >
+            반납하기
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    {%endfor%} {%endif%}
+  </div>
+  {% endblock %}
+
+    {% block script %}
+    <script>
+      function handleReturnClick(book_id, user_id) {
+        axios.post(`/return/${book_id}`).then((res) => {
+          window.alert("반납 완료");
+          window.location = res.data.redirect;
+        });
+      }
+    </script>
+    {% endblock %}
+  </div>
+</div>

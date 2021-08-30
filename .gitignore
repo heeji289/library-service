@@ -1,0 +1,7 @@
+node_modules
+.env
+.gitmessage.txt
+combined.log
+error.log
+artillery-config.yml
+db.config.json

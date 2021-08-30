@@ -1,0 +1,72 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="join-wrap">
+  <form id="join-form" action="/auth/join" method="post">
+    <span>🐰</span>
+
+    <div class="input-group">
+      <input
+        id="join-username"
+        type="text"
+        name="username"
+        placeholder="이름"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <input
+        id="join-email"
+        type="email"
+        name="email"
+        placeholder="이메일"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <input
+        id="join-password"
+        type="password"
+        name="password"
+        placeholder="비밀번호"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <input
+        id="join-passwordcheck"
+        type="password"
+        name="passwordcheck"
+        placeholder="비밀번호 확인"
+        required
+      />
+    </div>
+    <button id="join-btn" type="submit" class="btn btn-primary">
+      회원가입
+    </button>
+    <a href="/auth/login">이미 회원인가요?</a>
+  </form>
+</div>
+{% if errorMessage %}
+<br />
+<div class="alert alert-primary join__alert">
+  {{errorMessage}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %} {% endblock %} {% block script %}
+<script>
+  window.onload = () => {
+    const errors = new URL(location.href).searchParams.get("error");
+    console.log(errors);
+    if (errors) {
+      if (errors === "wrongpassword") {
+        alert("비밀번호가 일치하지 않습니다.");
+      } else if (errors === "already") {
+        alert("이미 존재하는 이메일입니다");
+      } else {
+        alert("잘못된 접근입니다");
+      }
+    }
+  };
+</script>
+{% endblock %}

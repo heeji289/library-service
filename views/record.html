@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h3 style="text-align: center;">대여기록</h3>
+
+<div class="row">
+{% for record in records %}
+  <div class="col-sm-4">
+    <div class="card text-center rounded-0">
+      <div class="card__image">
+        {% if record.BookId in [1,2,3,7,8,9]%}
+        <img width="100px" src="/book_img/{{record.BookId}}.png" alt="" />
+        {% else %}
+        <img width="100px" src="/book_img/{{record.BookId}}.jpg" alt="" />
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <a id="book-name" href="/book/{{record.BookId}}"
+          ><h6 class="card-title"><b>{{record.book_name}}</b></h6></a
+        >
+        <div class="card__left">
+          <div class="card-text">
+          </div>
+          <p class="card-text">
+            {{record.borrow_date.getFullYear()}}-{{record.borrow_date.getMonth() + 1}}-{{record.borrow_date.getDate()}} <br />
+            ~
+            {{record.return_date.getFullYear()}}-{{record.return_date.getMonth() + 1}}-{{record.return_date.getDate()}}
+        </div>
+        <div class="card__right">
+          <a  id="book-name" href="/book/{{record.BookId}}" class="btn btn-primary" style="margin-top: 10px; color: aliceblue !important;"
+          >서평쓰기</a>
+          </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+      {% endblock %}
+      {% block script %} {% endblock %}
+    </div>
+  </div>
+</div>

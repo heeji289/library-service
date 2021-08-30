@@ -1,0 +1,58 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="login-wrap">
+  <form id="login-form" action="/auth/login" method="post">
+    <span>🐰</span>
+    <div class="input-group">
+      <input
+        id="email"
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+        autofocus
+      />
+    </div>
+    <div class="input-group">
+      <input
+        id="password"
+        type="password"
+        name="password"
+        placeholder="Password"
+        required
+      />
+    </div>
+    <button id="login" type="submit" class="btn btn-primary" style="left: 0">
+      Sign In
+    </button>
+    <a id="join" href="/auth/join" style="margin-left: 15px">
+      <span>__</span>회원가입 <i class="fas fa-sign-in-alt"></i
+    ></a>
+    <div>
+      <a id="github" href="/auth/github" class="btn"
+        ><i class="fab fa-github"></i
+      ></a>
+    </div>
+  </form>
+</div>
+{% if errorMessage %}
+
+<div class="alert alert-primary login__alert">
+  {{errorMessage}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{% endif %} {% endblock %} {% block script %}
+<script>
+  var alertList = document.querySelectorAll(".alert");
+  alertList.forEach(function (alert) {
+    new bootstrap.Alert(alert);
+  });
+  window.onload = () => {
+    if (new URL(location.href).searchParams.get("loginError")) {
+      alert(new URL(location.href).searchParams.get("loginError"));
+    }
+  };
+</script>
+{% endblock %}
