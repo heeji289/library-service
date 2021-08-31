@@ -17,7 +17,7 @@
 
   
 [데모페이지](http://kdt-1st-project-29.koreacentral.cloudapp.azure.com)  
-[발표자료](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/78ad8589-b1fd-4dc6-b87a-131fa68d70ae/0828_%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210830%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210830T093246Z&X-Amz-Expires=86400&X-Amz-Signature=b7b41f1f4d7a36adede62b9b3d3ed25ea45ebd10a0b78df65a4a69371092a25c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%220828%2520%25EB%25B0%259C%25ED%2591%259C%25EC%259E%2590%25EB%25A3%258C.pdf%22)
+[발표자료](https://drive.google.com/file/d/18djgBySGsSILX-tY_kw5DuVI4ghDiKJY/view?usp=sharing)
   
 </div>
 
